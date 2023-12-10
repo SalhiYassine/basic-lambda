@@ -13,6 +13,11 @@ variable "input_location" {
 
 }
 
+variable "lambda_name" {
+  type    = string
+  default = "example_lambda_function"
+}
+
 # Zip the function for the lambda
 data "archive_file" "lambda" {
   type        = "zip"
@@ -41,10 +46,6 @@ resource "aws_iam_role" "iam_for_lambda" {
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
-variable "lambda_name" {
-  type    = string
-  default = "example_lambda_function"
-}
 
 # Enable logging for lambda via cloudwatch
 resource "aws_cloudwatch_log_group" "example_lambda_log_group" {
