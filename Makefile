@@ -1,11 +1,11 @@
-check:
-	cd infrastructure && terraform init &&  terraform fmt && terraform validate
+init:
+	cd infra && terraform init && terraform fmt && terraform validate
 
 plan:
-	cd infrastructure && terraform plan
+	cd infra && terraform plan
 
 apply:
-	cd infrastructure && terraform apply
+	cd infra && terraform apply
 
 destroy:
-	cd infrastructure && terraform destroy
+	cd infra && terraform destroy
