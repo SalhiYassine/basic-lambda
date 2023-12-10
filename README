@@ -8,6 +8,8 @@ Partly me having fun, partly a step towards making myself some infrastructure te
 
 
 ### How to run this?
+NOTE: ensure you have the aws cli installed on your machine and have run `aws configure` to provide your access key and secret
+
 Install tfenv (version manager for terraform)
 `brew install tfenv`
 
@@ -21,6 +23,9 @@ Use the desired version
 
 Next, use the Makefile commands to get you up and running
 
+Install the lambda function dependencies
+`make install-function-deps`
+
 Build the lambda function
 `make build-function`
 
@@ -32,6 +37,9 @@ Run the plan command to see what infrastructure you are about to create
 
 Provided everything looks good
 `make apply` - you will be prompted to accept the plan by entering `yes`
+
+Once you are done, clean up all resources your created
+`make destroy`
 
 Done! You now have a lambda!
 
