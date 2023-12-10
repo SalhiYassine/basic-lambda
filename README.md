@@ -1,46 +1,73 @@
 ## What is this?
-All you need to ship a lambda function written in Node & Typescript
 
-PS: this is not production ready, this was an initial experiment. I will have a production worthy one up soon
+This is a set of instructions and commands to ship a Lambda function written in Node.js and TypeScript. Please note that this is not production-ready and was initially an experiment. The intention is to create infrastructure templates for quick deployment in the future.
 
 ## Why does this exist?
-Partly me having fun, partly a step towards making myself some infrastructure templates I can use in the future if I need to ship something fast 🚀
 
+This project exists for two main reasons: 
+1. A fun experiment.
+2. A step towards creating infrastructure templates for fast deployment.
 
-### How to run this?
-NOTE: ensure you have the aws cli installed on your machine and have run `aws configure` to provide your access key and secret
+## How to run this?
 
-Install tfenv (version manager for terraform)
-`brew install tfenv`
+**Note:** Ensure you have the AWS CLI installed on your machine and have run `aws configure` to provide your access key and secret.
 
-I used version `1.4.6` so for I recommend the same for if you choose to run this
+1. Install `tfenv` (version manager for Terraform):
 
-Install desired version
-`tfenv install 1.4.6`
+    ```bash
+    brew install tfenv
+    ```
 
-Use the desired version
-`tfenv use 1.4.6`
+2. Install the desired version of Terraform (1.4.6 is recommended for this project):
 
-Next, use the Makefile commands to get you up and running
+    ```bash
+    tfenv install 1.4.6
+    ```
 
-Install the lambda function dependencies
-`make install-function-deps`
+3. Use the desired version:
 
-Build the lambda function
-`make build-function`
+    ```bash
+    tfenv use 1.4.6
+    ```
 
-Initialise terraform
-`make init`
+4. Use the Makefile commands to set up the environment:
 
-Run the plan command to see what infrastructure you are about to create
-`make plan`
+    - Install Lambda function dependencies:
 
-Provided everything looks good
-`make apply` - you will be prompted to accept the plan by entering `yes`
+        ```bash
+        make install-function-deps
+        ```
 
-Once you are done, clean up all resources your created
-`make destroy`
+    - Build the Lambda function:
 
-Done! You now have a lambda!
+        ```bash
+        make build-function
+        ```
 
-Check the logs for the output (lambda url) and if everything went well you should see your function return
+    - Initialize Terraform:
+
+        ```bash
+        make init
+        ```
+
+    - Run the plan command to preview the infrastructure:
+
+        ```bash
+        make plan
+        ```
+
+    - If everything looks good, apply the changes:
+
+        ```bash
+        make apply
+        ```
+
+        You'll be prompted to accept the plan by entering `yes`.
+
+5. Once you're done, clean up all resources:
+
+    ```bash
+    make destroy
+    ```
+
+You now have a Lambda function! Check the logs for the output (Lambda URL), and if everything went well, you should see your function return.
