@@ -11,7 +11,7 @@ destroy:
 	cd infra && terraform destroy
 
 install-function-deps:
-	cd example && npm install
+	cd functions && npm install
 
 build-function:
-	cd example && npm run build
+	cd functions && npm run build

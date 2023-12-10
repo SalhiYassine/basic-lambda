@@ -1,6 +1,6 @@
 import { Handler } from 'aws-lambda';
 
-const handler: Handler = async (event, context) => {
+const getSomethingHandler: Handler = async (event, context) => {
 
   console.log({
     event, context
@@ -12,4 +12,4 @@ const handler: Handler = async (event, context) => {
   };
 };
 
-export { handler };
+export { getSomethingHandler };

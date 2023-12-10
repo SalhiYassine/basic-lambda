@@ -3,16 +3,15 @@ provider "aws" {
 }
 
 variable "output_location" {
-  default = "zipped-functions/example/lambda_function_payload.zip"
+  default = "zipped-functions/lambda_functions_payload.zip"
 }
 
 variable "input_location" {
-  default = "../example/dist/index.js"
-
+  default = "../functions/dist/index.js"
 }
 
 variable "lambda_name" {
-  default = "example_lambda_function"
+  default = "getSomethingHandler_lambda_func"
 }
 
 # Zip the function for the lambda
@@ -41,7 +40,7 @@ resource "aws_iam_role" "iam_for_lambda" {
 }
 
 # Enable logging for lambda via cloudwatch
-resource "aws_cloudwatch_log_group" "example_lambda_log_group" {
+resource "aws_cloudwatch_log_group" "getSomethingHandler_lambda_func_log_group" {
   name              = "/aws/lambda/${var.lambda_name}"
   retention_in_days = 3
 }
@@ -72,26 +71,26 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 }
 
 # Create lambda
-resource "aws_lambda_function" "example_lambda" {
+resource "aws_lambda_function" "getSomethingHandler_lambda_func" {
   filename         = var.output_location
   function_name    = var.lambda_name
   role             = aws_iam_role.iam_for_lambda.arn
   source_code_hash = data.archive_file.lambda.output_base64sha256
   runtime          = "nodejs18.x"
-  handler          = "index.handler"
+  handler          = "index.getSomethingHandler"
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
-    aws_cloudwatch_log_group.example_lambda_log_group
+    aws_cloudwatch_log_group.getSomethingHandler_lambda_func_log_group
   ]
 }
 
 # Create public access URL for the lambda
-resource "aws_lambda_function_url" "example_lambda_function_url" {
-  function_name      = aws_lambda_function.example_lambda.function_name
+resource "aws_lambda_function_url" "getSomethingHandler_url" {
+  function_name      = aws_lambda_function.getSomethingHandler_lambda_func.function_name
   authorization_type = "NONE"
-  depends_on         = [aws_lambda_function.example_lambda]
+  depends_on         = [aws_lambda_function.getSomethingHandler_lambda_func]
 }
 
-output "lambda_address" {
-  value = aws_lambda_function_url.example_lambda_function_url.function_url
+output "getSomethingHandlerUrl" {
+  value = aws_lambda_function_url.getSomethingHandler_url.function_url
 }
