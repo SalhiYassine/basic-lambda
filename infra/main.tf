@@ -93,4 +93,16 @@ resource "aws_lambda_function" "example_lambda" {
   ]
 }
 
+# Create public access URL for the lambda
+resource "aws_lambda_function_url" "example_lambda_function_url" {
+  function_name      = aws_lambda_function.example_lambda.function_name
+  authorization_type = "NONE"
+
+  depends_on = [aws_lambda_function.example_lambda]
+}
+
+output "lambda_address" {
+  value = aws_lambda_function_url.example_lambda_function_url.function_url
+}
+
 
