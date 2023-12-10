@@ -2,10 +2,10 @@ init:
 	cd infra && terraform init && terraform fmt && terraform validate
 
 plan:
-	cd infra && terraform plan
+	make build-function && cd infra && terraform plan
 
 apply:
-	cd infra && terraform apply
+	make build-function && cd infra && terraform apply
 
 destroy:
 	cd infra && terraform destroy

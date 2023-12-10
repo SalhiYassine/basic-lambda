@@ -3,18 +3,15 @@ provider "aws" {
 }
 
 variable "output_location" {
-  type    = string
   default = "zipped-functions/example/lambda_function_payload.zip"
 }
 
 variable "input_location" {
-  type    = string
   default = "../example/dist/index.js"
 
 }
 
 variable "lambda_name" {
-  type    = string
   default = "example_lambda_function"
 }
 
@@ -25,17 +22,14 @@ data "archive_file" "lambda" {
   output_path = var.output_location
 }
 
-
 # Create policy for the lambda 
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
-
     principals {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
     }
-
     actions = ["sts:AssumeRole"]
   }
 }
@@ -45,7 +39,6 @@ resource "aws_iam_role" "iam_for_lambda" {
   name               = "iam_for_lambda"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
-
 
 # Enable logging for lambda via cloudwatch
 resource "aws_cloudwatch_log_group" "example_lambda_log_group" {
@@ -66,7 +59,6 @@ data "aws_iam_policy_document" "lambda_logging" {
     resources = ["arn:aws:logs:*:*:*"]
   }
 }
-
 resource "aws_iam_policy" "lambda_logging" {
   name        = "lambda_logging"
   path        = "/"
@@ -87,7 +79,6 @@ resource "aws_lambda_function" "example_lambda" {
   source_code_hash = data.archive_file.lambda.output_base64sha256
   runtime          = "nodejs18.x"
   handler          = "index.handler"
-
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
     aws_cloudwatch_log_group.example_lambda_log_group
@@ -98,12 +89,9 @@ resource "aws_lambda_function" "example_lambda" {
 resource "aws_lambda_function_url" "example_lambda_function_url" {
   function_name      = aws_lambda_function.example_lambda.function_name
   authorization_type = "NONE"
-
-  depends_on = [aws_lambda_function.example_lambda]
+  depends_on         = [aws_lambda_function.example_lambda]
 }
 
 output "lambda_address" {
   value = aws_lambda_function_url.example_lambda_function_url.function_url
 }
-
-
