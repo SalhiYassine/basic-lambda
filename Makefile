@@ -9,3 +9,6 @@ apply:
 
 destroy:
 	cd infra && terraform destroy
+
+build-function:
+	cd example && npm run build
