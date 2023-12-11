@@ -8,8 +8,20 @@ const getSomethingHandler: Handler = async (event, context) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ message: 'Function executed.' }),
+    body: JSON.stringify({ message: 'got something' }),
   };
 };
 
-export { getSomethingHandler };
+const getSomethingElseHandler: Handler = async (event, context) => {
+
+  console.log({
+    event, context
+  })
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: 'got something else.' }),
+  };
+};
+
+export { getSomethingHandler, getSomethingElseHandler };
